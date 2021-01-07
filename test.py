@@ -24,3 +24,8 @@ elif(action == "test_aws"):
     from TextSentiment.aws.comprehend import analyse_sentiment
     text = input("Enter text to analyse: ")
     print(analyse_sentiment(text))
+elif(action == "summary"):
+    from TextSummary.Summariser import *
+    data = input("Enter Text to Summarise: ")
+    print("Summarising....")
+    print(generate_summary(data, True, 2))
