@@ -1,0 +1,159 @@
+----------------------------------------------------------------------------------------
+EnterpriseAI Video Analyser
+----------------------------------------------------------------------------------------
+Creating Amazon S3 bucket and uploading video.
+Creating notification channel from Amazon Rekognition to Amazon SQS.
+Detecting labels in the video.
+Detected 648 labels, here are the first twenty:
+{'name': 'Accessories', 'timestamp': 0}
+{'name': 'Accessory', 'timestamp': 0}
+{'name': 'Apparel', 'timestamp': 0}
+{'name': 'Audience', 'timestamp': 0}
+{'name': 'Clothing', 'timestamp': 0}
+{'name': 'Coat', 'timestamp': 0}
+{'name': 'Crowd', 'timestamp': 0}
+{'name': 'Debate', 'timestamp': 0}
+{'name': 'Electronics', 'timestamp': 0}
+{'name': 'Face', 'timestamp': 0}
+{'name': 'Frown', 'timestamp': 0}
+{'name': 'Human', 'timestamp': 0}
+{'name': 'Lecture', 'timestamp': 0}
+{'name': 'Overcoat', 'timestamp': 0}
+{'name': 'People', 'timestamp': 0}
+{'name': 'Person', 'timestamp': 0}
+{'name': 'Photo', 'timestamp': 0}
+{'name': 'Photography', 'timestamp': 0}
+{'name': 'Press Conference', 'timestamp': 0}
+{'name': 'Screen', 'timestamp': 0}
+Detecting faces in the video.
+Detected 48 faces, here are the first ten:
+{'bounding_box': {'Height': 0.4022231996059418,
+                  'Left': 0.42511653900146484,
+                  'Top': 0.17006325721740723,
+                  'Width': 0.15148992836475372},
+ 'timestamp': 0}
+{'bounding_box': {'Height': 0.40404579043388367,
+                  'Left': 0.4259345531463623,
+                  'Top': 0.17242296040058136,
+                  'Width': 0.15328331291675568},
+ 'timestamp': 467}
+{'bounding_box': {'Height': 0.3957346975803375,
+                  'Left': 0.4250679016113281,
+                  'Top': 0.1745986044406891,
+                  'Width': 0.15356449782848358},
+ 'timestamp': 967}
+{'bounding_box': {'Height': 0.39884620904922485,
+                  'Left': 0.4289845824241638,
+                  'Top': 0.16172680258750916,
+                  'Width': 0.15854592621326447},
+ 'timestamp': 1468}
+{'bounding_box': {'Height': 0.40555840730667114,
+                  'Left': 0.43381696939468384,
+                  'Top': 0.16434936225414276,
+                  'Width': 0.16154508292675018},
+ 'timestamp': 1968}
+{'bounding_box': {'Height': 0.38886138796806335,
+                  'Left': 0.4436613619327545,
+                  'Top': 0.1517380177974701,
+                  'Width': 0.1538069248199463},
+ 'timestamp': 2469}
+{'bounding_box': {'Height': 0.36638501286506653,
+                  'Left': 0.40918248891830444,
+                  'Top': 0.16130506992340088,
+                  'Width': 0.16189751029014587},
+ 'timestamp': 2969}
+{'bounding_box': {'Height': 0.4166828691959381,
+                  'Left': 0.3966677188873291,
+                  'Top': 0.20267470180988312,
+                  'Width': 0.16180261969566345},
+ 'timestamp': 3470}
+{'bounding_box': {'Height': 0.42090147733688354,
+                  'Left': 0.4100791811943054,
+                  'Top': 0.17925894260406494,
+                  'Width': 0.15483379364013672},
+ 'timestamp': 3970}
+{'bounding_box': {'Height': 0.4137932360172272,
+                  'Left': 0.4147408604621887,
+                  'Top': 0.18850839138031006,
+                  'Width': 0.1548389494419098},
+ 'timestamp': 4471}
+Detecting celebrities in the video.
+Found 30 celebrity detection events. Here's the first appearance of each celebrity:
+{'bounding_box': {'Height': 0.3986110985279083,
+                  'Left': 0.3734374940395355,
+                  'Top': 0.18611110746860504,
+                  'Width': 0.22421875596046448},
+ 'info URLs': ['www.imdb.com/name/nm1757263'],
+ 'name': 'Jeff Bezos',
+ 'timestamp': 0}
+{'bounding_box': {'Height': 0.12777778506278992,
+                  'Left': 0.16171875596046448,
+                  'Top': 0.15694443881511688,
+                  'Width': 0.07187499850988388},
+ 'name': 'Werner Vogels',
+ 'timestamp': 9976}
+Tracking people in the video. This takes a little longer. Be patient!
+Detected 360 person tracking items, here are the first five for each person:
+{'bounding_box': {'Height': 0.8333333134651184,
+                  'Left': 0.20624999701976776,
+                  'Top': 0.11388888955116272,
+                  'Width': 0.6546875238418579},
+ 'index': 0,
+ 'timestamp': 0}
+{'bounding_box': {'Height': 0.831944465637207,
+                  'Left': 0.20546874403953552,
+                  'Top': 0.11388888955116272,
+                  'Width': 0.655468761920929},
+ 'index': 0,
+ 'timestamp': 33}
+{'bounding_box': {'Height': 0.8333333134651184,
+                  'Left': 0.20000000298023224,
+                  'Top': 0.11249999701976776,
+                  'Width': 0.6625000238418579},
+ 'index': 0,
+ 'timestamp': 100}
+{'bounding_box': {'Height': 0.8402777910232544,
+                  'Left': 0.19843749701976776,
+                  'Top': 0.10833333432674408,
+                  'Width': 0.664843738079071},
+ 'index': 0,
+ 'timestamp': 166}
+{'bounding_box': {'Height': 0.8333333134651184,
+                  'Left': 0.19765624403953552,
+                  'Top': 0.1111111119389534,
+                  'Width': 0.6640625},
+ 'index': 0,
+ 'timestamp': 233}
+{'bounding_box': {'Height': 0.737500011920929,
+                  'Left': 0.08437500149011612,
+                  'Top': 0.17916665971279144,
+                  'Width': 0.34453123807907104},
+ 'index': 1,
+ 'timestamp': 5038}
+{'bounding_box': {'Height': 0.737500011920929,
+                  'Left': 0.08437500149011612,
+                  'Top': 0.17916665971279144,
+                  'Width': 0.34453123807907104},
+ 'index': 1,
+ 'timestamp': 5105}
+{'bounding_box': {'Height': 0.7361111044883728,
+                  'Left': 0.08515624701976776,
+                  'Top': 0.1805555522441864,
+                  'Width': 0.3453125059604645},
+ 'index': 1,
+ 'timestamp': 5171}
+{'bounding_box': {'Height': 0.7347221970558167,
+                  'Left': 0.08515624701976776,
+                  'Top': 0.18194444477558136,
+                  'Width': 0.3453125059604645},
+ 'index': 1,
+ 'timestamp': 5238}
+{'bounding_box': {'Height': 0.7333333492279053,
+                  'Left': 0.08515624701976776,
+                  'Top': 0.18611110746860504,
+                  'Width': 0.3460937440395355},
+ 'index': 1,
+ 'timestamp': 5305}
+Deleting resources created for the demo.
+All resources cleaned up. Thanks for using our service!
+----------------------------------------------------------------------------------------

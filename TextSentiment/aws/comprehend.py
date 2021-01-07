@@ -2,10 +2,7 @@ import boto3
 import json
 import os
 
-comprehend = boto3.client(service_name='comprehend',
-region_name='ap-south-1',
-aws_access_key_id = os.getenv("aws_access_key_id"),
-aws_secret_access_key = os.getenv("aws_secret_access_key"))
+comprehend = boto3.client(service_name='comprehend')
 
 def analyse_sentiment(text):
     data = comprehend.detect_sentiment(Text=text, LanguageCode='en')
