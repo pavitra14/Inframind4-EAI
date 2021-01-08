@@ -6,7 +6,8 @@ import time
 from werkzeug.utils import secure_filename
 from VideoDescription.Analyser import analyse as VideoAnalyse
 from urllib.parse import urlparse
-
+from ImageDescription.Analyser import *
+from ImageDescription.utils import ImageEntity
 
 
 UPLOAD_FOLDER = "static/uploads"
@@ -43,6 +44,27 @@ def do_video_analysis():
     else:
         data = VideoAnalyse(video_name, video_url)
     return data
+
+@app.route("/image_analysis")
+def show_image_analysis():
+    return render_template("image_analysis.html")
+
+@app.route("/ajax/image_analysis", methods=['POST'])
+def do_image_analysis():
+    file = request.files['image']
+    imageData = "No Image Provided"
+    if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            print("Received file: {}".format(filename))
+            image = os.path.join(os.path.curdir,app.config['UPLOAD_FOLDER'], filename)
+            print("Saving file: {}".format(filename))
+            file.save(image)
+            print("Processing file: {}".format(filename))
+            data = detect_labels_local_file(image)
+            imageData = ImageEntity(data)
+            os.remove(image)
+    return str(imageData)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
