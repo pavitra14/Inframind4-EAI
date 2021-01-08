@@ -8,17 +8,14 @@ from VideoDescription.Analyser import analyse as VideoAnalyse
 from urllib.parse import urlparse
 from ImageDescription.Analyser import *
 from ImageDescription.utils import ImageEntity
+from TextSummary.Summariser import *
 
 
 UPLOAD_FOLDER = "static/uploads"
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'mp4'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'mp4', 'txt'])
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-err = {
-    'status':'error',
-    'message': 'File not found'
-}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -64,6 +61,27 @@ def do_image_analysis():
             imageData = ImageEntity(data)
             os.remove(image)
     return str(imageData)
+
+
+@app.route("/text_summary")
+def show_text_summary():
+    return render_template("text_summary.html")
+
+@app.route("/ajax/text_summary", methods=['POST'])
+def do_text_summary():
+    file = request.files['text']
+    print(request.files)
+    textData = "No Article Provided"
+    if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            print("Received file: {}".format(filename))
+            textFile = os.path.join(os.path.curdir,app.config['UPLOAD_FOLDER'], filename)
+            print("Saving file: {}".format(filename))
+            file.save(textFile)
+            print("Processing file: {}".format(filename))
+            textData = generate_summary(textFile, False, 2)
+            os.remove(textFile)
+    return str(textData)
 
 
 if __name__ == '__main__':

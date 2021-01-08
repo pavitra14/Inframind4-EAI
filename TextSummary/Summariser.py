@@ -14,7 +14,6 @@ def read_article(data, no_file=False):
     sentences = []
 
     for sentence in article:
-        print(sentence)
         sentences.append(sentence.replace("[^a-zA-Z]", " ").split(" "))
     sentences.pop()
     return sentences
