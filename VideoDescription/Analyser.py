@@ -31,7 +31,7 @@ def analyse(video_name, video_url):
     sns_resource = boto3.resource('sns')
     sqs_resource = boto3.resource('sqs')
     video.create_notification_channel(
-        'inframind-eai', iam_resource, sns_resource, sqs_resource)
+        f'inframind-eai-{time.time_ns()}', iam_resource, sns_resource, sqs_resource)
 
     info.add("Detecting labels in the video.")
     labels = video.do_label_detection()
