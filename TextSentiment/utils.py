@@ -5,6 +5,7 @@ from nltk.tokenize import word_tokenize
 from nltk import FreqDist, classify, NaiveBayesClassifier
 import pickle
 import re, string, random, os
+import tweepy
 
 
 MODEL_DIR = "models"
@@ -52,3 +53,17 @@ def loadModel(filename):
     classifier = pickle.load(f)
     f.close()
     return classifier
+
+def get_tweet(url):
+    data = url.split("/")
+    id = data[-1]
+    consumer_key = os.getenv("TWITTER_API_KEY")
+    consumer_secret = os.getenv("TWITTER_API_SECRET")
+    access_token = os.getenv("TWITTER_ACCESS_TOKEN")
+    access_token_secret = os.getenv("TWITTER_ACCESS_SECRET")
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth)
+    status = api.get_status(id, tweet_mode = "extended")
+    full_text = status.full_text
+    return full_text

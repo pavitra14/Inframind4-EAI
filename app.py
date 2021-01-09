@@ -1,14 +1,22 @@
 import settings
 from flask import Flask, flash, request, redirect, url_for, jsonify, render_template
 import os
-import wget
+import json
 import time
 from werkzeug.utils import secure_filename
-from VideoDescription.Analyser import analyse as VideoAnalyse
+from lxml import html
+import requests
 from urllib.parse import urlparse
+from pprint import pformat
+
+# Use Case Libraries
+from VideoDescription.Analyser import analyse as VideoAnalyse
 from ImageDescription.Analyser import *
 from ImageDescription.utils import ImageEntity
 from TextSummary.Summariser import *
+from TextSentiment.utils import get_tweet
+from TextSentiment.aws.comprehend import analyse_sentiment
+from utils import sentiment_colors,sentiment_labels,get_sentiment_chart_values
 
 
 UPLOAD_FOLDER = "static/uploads"
@@ -82,6 +90,21 @@ def do_text_summary():
             textData = generate_summary(textFile, False, 2)
             os.remove(textFile)
     return str(textData)
+
+@app.route("/sentiment_social")
+def show_sentiment_social():
+    return render_template("sentiment_social.html")
+
+@app.route("/ajax/sentiment_social", methods=['POST'])
+def do_sentiment_social():
+    tweet = get_tweet(request.form['tweet_url'])
+    data = analyse_sentiment(tweet)
+    response = dict()
+    response['data'] = pformat(data)
+    response['labels'] = sentiment_labels
+    response['colors'] = sentiment_colors
+    response['overall'] , response['values'] = get_sentiment_chart_values(data)
+    return jsonify(response)
 
 
 if __name__ == '__main__':
