@@ -1,5 +1,6 @@
 import settings
-from flask import Flask, flash, request, redirect, url_for, jsonify, render_template
+from flask import Flask, flash, request, redirect, url_for, jsonify, render_template, session
+from flask_socketio import SocketIO, emit, join_room
 import os
 import json
 import time
@@ -27,6 +28,8 @@ def allowed_file(filename):
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['SECRET_KEY'] = 'Pm$@K7lN#d5#*GcUfj7^sQ7g*5LI'
+socketio = SocketIO(app)
 
 @app.route("/")
 def index():
@@ -106,6 +109,39 @@ def do_sentiment_social():
     response['overall'] , response['values'] = get_sentiment_chart_values(data)
     return jsonify(response)
 
+@app.route("/live_chat")
+def show_live_chat():
+    return render_template("live_chat.html")
 
+@app.route("/ajax/do_sentiment_text_only", methods=['POST'])
+def do_sentiment_text_only():
+    msg = request.form['chat_message']
+    data = analyse_sentiment(msg)
+    overall, _ = get_sentiment_chart_values(data)
+    return overall
+
+@socketio.on('message', namespace='/chat')
+def chat_message(message):
+    print(message)
+    emit('message', {'data': message['data']}, broadcast = True)
+
+@socketio.on('connect', namespace='/chat')
+def test_connect():
+    emit('my response', {'data': 'Connected', 'count': 0})
+
+
+
+
+# Following are functions required for demo
+@app.route('/demo')
+def chat():
+
+    return render_template('chat.html')
+@app.route('/demo/login')
+def login():
+    return render_template('login.html')
+
+    
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
+    socketio.run(app, debug=True)
